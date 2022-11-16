@@ -15,4 +15,9 @@ public class SceneSwitcher : MonoBehaviour
     {
         SceneManager.LoadScene("3_Steps_PillPal");
     }
+
+    public void LoadHomePage()
+    {
+        SceneManager.LoadScene("1_Menu_PillPal");
+    }
 }
