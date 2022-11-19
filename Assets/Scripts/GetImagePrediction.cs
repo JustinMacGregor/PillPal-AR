@@ -34,7 +34,7 @@ public class GetImagePrediction : MonoBehaviour
         string body = @"{ user_app_id: { user_id" + USER_ID + ", app_id: " + APP_ID + "}, inputs: [ { data: { image: { base64: " + IMAGE_BYTES_STRING + " } } } ] }";
         var BASE_URL = "https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs";
 
-        var uwr = new UnityWebRequest(BASE_URL, "POST");
+        var uwr = new UnityWebRequest(BASE_URL, UnityWebRequest.kHttpVerbPOST);
         byte[] bodyData = System.Text.Encoding.UTF8.GetBytes(body);
         Debug.Log("Body data: " + bodyData.ToString());
 
