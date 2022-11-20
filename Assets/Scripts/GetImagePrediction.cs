@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 
 public class GetImagePrediction : MonoBehaviour
@@ -32,45 +33,43 @@ public class GetImagePrediction : MonoBehaviour
             string MODEL_ID = "pills";
             string MODEL_VERSION_ID = "d869d62602094986930528bc00f0beaa";
 
-            string body = "{user_app_id:{user_id:" + USER_ID + ",app_id:" + APP_ID + "},inputs:[{data:{image:{base64:" + IMAGE_BYTES_STRING + "}}}]}";
+            //string body = "{user_app_id:{user_id:" + USER_ID + ",app_id:" + APP_ID + "},inputs:[{data:{image:{base64:" + IMAGE_BYTES_STRING + "}}}]}";
             //var BASE_URL = "https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs";
             var BASE_URL = "https://api.clarifai.com/v2/users/" + USER_ID + "/apps/" + APP_ID + "/models/" + MODEL_ID + "/outputs";
 
         //And we start a new co routine in Unity and wait for the response.
-        StartCoroutine(WaitForRequest(body, BASE_URL, IMAGE_BYTES_STRING));
+        StartCoroutine(WaitForRequest(BASE_URL, IMAGE_BYTES_STRING));
     }
 
  
     //Wait for the www Request and get result
-    IEnumerator WaitForRequest(string bodyData, string BASE_URL, string IMAGE_BYTES_STRING)
+    IEnumerator WaitForRequest(string BASE_URL, string IMAGE_BYTES_STRING)
     {
         string USER_ID = "justingg";
         string PAT = "03e4d15f3e074dd09eb2d7e5dade2814";
         string APP_ID = "pillpal";
 
 
-        UserAppId userAppId = new UserAppId();
         Image image = new Image();
+        image.base64 = IMAGE_BYTES_STRING;
         Data data = new Data();
+        data.image = image;
         Input input = new Input();
+        input.data = data;
         List<Input> inputs = new List<Input>() { input };
 
         var requestData = new RequestData();
-
-
-        requestData.user_app_id = userAppId;
-        requestData.user_app_id.user_id = USER_ID;
-        requestData.user_app_id.app_id = APP_ID;
-
 
         requestData.inputs = inputs;
         requestData.inputs[0].data = data;
         requestData.inputs[0].data.image = image;
         requestData.inputs[0].data.image.base64 = IMAGE_BYTES_STRING;
 
-        string json = JsonUtility.ToJson(requestData);
+        string json = JsonConvert.SerializeObject(requestData);
+        Debug.Log(json.ToString());
 
         var req = new UnityWebRequest(BASE_URL, "POST");
+
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
         req.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         req.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -100,29 +99,26 @@ public class GetImagePrediction : MonoBehaviour
 }
 
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+[Serializable]
 public class Data
 {
-    public Image image { get; set; }
+    [SerializeField] public Image image { get; set; }
 }
 
+[Serializable]
 public class Image
 {
-    public string base64 { get; set; }
+    [SerializeField] public string base64 { get; set; }
 }
 
+[Serializable]
 public class Input
 {
-    public Data data { get; set; }
+    [SerializeField] public Data data { get; set; }
 }
 
+[Serializable]
 public class RequestData
 {
-    public UserAppId user_app_id { get; set; }
-    public List<Input> inputs { get; set; }
-}
-
-public class UserAppId
-{
-    public string user_id { get; set; }
-    public string app_id { get; set; }
+    [SerializeField] public List<Input> inputs { get; set; }
 }
