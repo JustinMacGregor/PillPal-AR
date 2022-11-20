@@ -33,7 +33,8 @@ public class GetImagePrediction : MonoBehaviour
             string MODEL_VERSION_ID = "d869d62602094986930528bc00f0beaa";
 
             string body = "{user_app_id:{user_id:" + USER_ID + ",app_id:" + APP_ID + "},inputs:[{data:{image:{base64:" + IMAGE_BYTES_STRING + "}}}]}";
-            var BASE_URL = "https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs";
+            //var BASE_URL = "https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs";
+            var BASE_URL = "https://api.clarifai.com/v2/users/" + USER_ID + "/apps/" + APP_ID + "/models/" + MODEL_ID + "/outputs";
 
         //And we start a new co routine in Unity and wait for the response.
         StartCoroutine(WaitForRequest(body, BASE_URL, IMAGE_BYTES_STRING));
@@ -43,10 +44,6 @@ public class GetImagePrediction : MonoBehaviour
     //Wait for the www Request and get result
     IEnumerator WaitForRequest(string bodyData, string BASE_URL, string IMAGE_BYTES_STRING)
     {
-        //@TODO: call API login
-        // Store Token
-        // Add Token to headers
-
         string USER_ID = "justingg";
         string PAT = "03e4d15f3e074dd09eb2d7e5dade2814";
         string APP_ID = "pillpal";
@@ -79,7 +76,7 @@ public class GetImagePrediction : MonoBehaviour
         req.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
 
         req.SetRequestHeader("Accept", "application/json");
-        req.SetRequestHeader("authorization", "Key " + PAT);
+        req.SetRequestHeader("Authorization", "Key " + PAT);
         req.SetRequestHeader("Content-Type", "application/json");
 
         //Send the request then wait here until it returns
