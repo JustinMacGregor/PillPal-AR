@@ -8,11 +8,7 @@ using UnityEngine.Networking;
 public class GetImagePrediction : MonoBehaviour
 {
     // INITIALIZE CLARIFAI VARIABLES //
-    private string USER_ID = "justingg";
-    private string PAT = "03e4d15f3e074dd09eb2d7e5dade2814";
-    private string APP_ID = "pillpal";
-    private string MODEL_ID = "pills";
-    private string MODEL_VERSION_ID = "d869d62602094986930528bc00f0beaa";
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,43 +27,71 @@ public class GetImagePrediction : MonoBehaviour
     //Takes Image as byte64 string
     public void MakePrediction(string IMAGE_BYTES_STRING)
     {
-        string body = @"{ user_app_id: { user_id" + USER_ID + ", app_id: " + APP_ID + "}, inputs: [ { data: { image: { base64: " + IMAGE_BYTES_STRING + " } } } ] }";
-        var BASE_URL = "https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs";
+            string USER_ID = "justingg";
+            string APP_ID = "pillpal";
+            string MODEL_ID = "pills";
+            string MODEL_VERSION_ID = "d869d62602094986930528bc00f0beaa";
 
-        var uwr = new UnityWebRequest(BASE_URL, UnityWebRequest.kHttpVerbPOST);
-        byte[] bodyData = System.Text.Encoding.UTF8.GetBytes(body);
-        Debug.Log("Body data: " + bodyData.ToString());
-
-        uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyData);
-        uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-
-        uwr.SetRequestHeader("Accept", "application/json");
-        uwr.SetRequestHeader("Authorization", "Key " + PAT);
-        uwr.SetRequestHeader("Content-Type", "application/json");
+            string body = "{user_app_id:{user_id:" + USER_ID + ",app_id:" + APP_ID + "},inputs:[{data:{image:{base64:" + IMAGE_BYTES_STRING + "}}}]}";
+            var BASE_URL = "https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs";
 
         //And we start a new co routine in Unity and wait for the response.
-        StartCoroutine(WaitForRequest(uwr, bodyData, BASE_URL));
+        StartCoroutine(WaitForRequest(body, BASE_URL, IMAGE_BYTES_STRING));
     }
 
  
     //Wait for the www Request and get result
-    IEnumerator WaitForRequest(UnityWebRequest uwr, byte[] bodyData, string BASE_URL)
+    IEnumerator WaitForRequest(string bodyData, string BASE_URL, string IMAGE_BYTES_STRING)
     {
-        WWWForm form = new WWWForm();
-        form.AddField("body", bodyData.ToString());
+        //@TODO: call API login
+        // Store Token
+        // Add Token to headers
 
-        using (UnityWebRequest www = UnityWebRequest.Post(BASE_URL, form))
+        string USER_ID = "justingg";
+        string PAT = "03e4d15f3e074dd09eb2d7e5dade2814";
+        string APP_ID = "pillpal";
+
+
+        UserAppId userAppId = new UserAppId();
+        Image image = new Image();
+        Data data = new Data();
+        Input input = new Input();
+        List<Input> inputs = new List<Input>() { input };
+
+        var requestData = new RequestData();
+
+
+        requestData.user_app_id = userAppId;
+        requestData.user_app_id.user_id = USER_ID;
+        requestData.user_app_id.app_id = APP_ID;
+
+
+        requestData.inputs = inputs;
+        requestData.inputs[0].data = data;
+        requestData.inputs[0].data.image = image;
+        requestData.inputs[0].data.image.base64 = IMAGE_BYTES_STRING;
+
+        string json = JsonUtility.ToJson(requestData);
+
+        var req = new UnityWebRequest(BASE_URL, "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+        req.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        req.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        req.SetRequestHeader("Accept", "application/json");
+        req.SetRequestHeader("authorization", "Key " + PAT);
+        req.SetRequestHeader("Content-Type", "application/json");
+
+        //Send the request then wait here until it returns
+        yield return req.SendWebRequest();
+
+        if (req.isNetworkError)
         {
-            yield return www.SendWebRequest();
-
-            if (www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Debug.Log(www.responseCode);
-            }
+            Debug.Log("Error While Sending: " + req.error);
+        }
+        else
+        {
+            Debug.Log("Received: " + req.downloadHandler.text);
         }
     }
 
@@ -76,4 +100,32 @@ public class GetImagePrediction : MonoBehaviour
     {
         
     }
+}
+
+// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+public class Data
+{
+    public Image image { get; set; }
+}
+
+public class Image
+{
+    public string base64 { get; set; }
+}
+
+public class Input
+{
+    public Data data { get; set; }
+}
+
+public class RequestData
+{
+    public UserAppId user_app_id { get; set; }
+    public List<Input> inputs { get; set; }
+}
+
+public class UserAppId
+{
+    public string user_id { get; set; }
+    public string app_id { get; set; }
 }
