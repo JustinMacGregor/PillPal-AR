@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using Newtonsoft.Json;
-
 
 public class GetImagePrediction : MonoBehaviour
 {
@@ -28,26 +27,25 @@ public class GetImagePrediction : MonoBehaviour
     //Takes Image as byte64 string
     public void MakePrediction(string IMAGE_BYTES_STRING)
     {
-            string USER_ID = "justingg";
-            string APP_ID = "pillpal";
-            string MODEL_ID = "pills";
-            string MODEL_VERSION_ID = "d869d62602094986930528bc00f0beaa";
-
-            //string body = "{user_app_id:{user_id:" + USER_ID + ",app_id:" + APP_ID + "},inputs:[{data:{image:{base64:" + IMAGE_BYTES_STRING + "}}}]}";
-            //var BASE_URL = "https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs";
-            var BASE_URL = "https://api.clarifai.com/v2/users/" + USER_ID + "/apps/" + APP_ID + "/models/" + MODEL_ID + "/outputs";
-
         //And we start a new co routine in Unity and wait for the response.
-        StartCoroutine(WaitForRequest(BASE_URL, IMAGE_BYTES_STRING));
+        StartCoroutine(WaitForRequest(IMAGE_BYTES_STRING));
     }
 
  
     //Wait for the www Request and get result
-    IEnumerator WaitForRequest(string BASE_URL, string IMAGE_BYTES_STRING)
+    IEnumerator WaitForRequest(string IMAGE_BYTES_STRING)
     {
+        GameObject predictionGameObject = GameObject.FindGameObjectWithTag("Prediction");
+        TextMesh predictionTextMesh = predictionGameObject.GetComponent<TextMesh>();
+        predictionTextMesh.text = "Loading...";
+
         string USER_ID = "justingg";
         string PAT = "03e4d15f3e074dd09eb2d7e5dade2814";
         string APP_ID = "pillpal";
+
+        string MODEL_ID = "pills";
+
+        var BASE_URL = "https://api.clarifai.com/v2/users/" + USER_ID + "/apps/" + APP_ID + "/models/" + MODEL_ID + "/outputs";
 
 
         Image image = new Image();
@@ -66,7 +64,6 @@ public class GetImagePrediction : MonoBehaviour
         requestData.inputs[0].data.image.base64 = IMAGE_BYTES_STRING;
 
         string json = JsonConvert.SerializeObject(requestData);
-        Debug.Log(json.ToString());
 
         var req = new UnityWebRequest(BASE_URL, "POST");
 
@@ -87,22 +84,21 @@ public class GetImagePrediction : MonoBehaviour
         }
         else
         {
-            Debug.Log("Received: " + req.downloadHandler.text);
-        }
-    }
+            var jsonResponse = JsonConvert.DeserializeObject<ResponseData>(req.downloadHandler.text);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            var prediction = jsonResponse.outputs[0].data.concepts[0].name;
+
+            predictionTextMesh.text = prediction.ToString();
+        }
     }
 }
 
-// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+
 [Serializable]
 public class Data
 {
     [SerializeField] public Image image { get; set; }
+    public List<Concept> concepts { get; set; }
 }
 
 [Serializable]
@@ -122,3 +118,130 @@ public class RequestData
 {
     [SerializeField] public List<Input> inputs { get; set; }
 }
+
+// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+public class Concept
+{
+    public string id { get; set; }
+    public string name { get; set; }
+    public double value { get; set; }
+    public string app_id { get; set; }
+}
+
+public class ImportInfo
+{
+}
+
+
+public class InputInfo
+{
+}
+
+public class Metadata
+{
+}
+
+public class Model
+{
+    public string id { get; set; }
+    public string name { get; set; }
+    public DateTime created_at { get; set; }
+    public DateTime modified_at { get; set; }
+    public string app_id { get; set; }
+    public OutputInfo output_info { get; set; }
+    public ModelVersion model_version { get; set; }
+    public string user_id { get; set; }
+    public InputInfo input_info { get; set; }
+    public TrainInfo train_info { get; set; }
+    public string model_type_id { get; set; }
+    public Visibility visibility { get; set; }
+    public object metadata { get; set; }
+    public Presets presets { get; set; }
+    public List<object> languages { get; set; }
+    public ImportInfo import_info { get; set; }
+    public bool workflow_recommended { get; set; }
+}
+
+public class ModelVersion
+{
+    public string id { get; set; }
+    public DateTime created_at { get; set; }
+    public Status status { get; set; }
+    public int total_input_count { get; set; }
+    public DateTime completed_at { get; set; }
+    public Visibility visibility { get; set; }
+    public string app_id { get; set; }
+    public string user_id { get; set; }
+    public Metadata metadata { get; set; }
+    public OutputInfo output_info { get; set; }
+    public InputInfo input_info { get; set; }
+    public TrainInfo train_info { get; set; }
+    public ImportInfo import_info { get; set; }
+}
+
+public class Output
+{
+    public string id { get; set; }
+    public Status status { get; set; }
+    public string created_at { get; set; }
+    public Model model { get; set; }
+    public Input input { get; set; }
+    public Data data { get; set; }
+}
+
+public class OutputConfig
+{
+    public bool concepts_mutually_exclusive { get; set; }
+    public bool closed_environment { get; set; }
+    public int max_concepts { get; set; }
+    public int min_value { get; set; }
+}
+
+public class OutputInfo
+{
+    public OutputConfig output_config { get; set; }
+    public string message { get; set; }
+    public Params @params { get; set; }
+}
+
+public class Params
+{
+    public int max_concepts { get; set; }
+    public int min_value { get; set; }
+    public List<SelectConcept> select_concepts { get; set; }
+    public string dataset_id { get; set; }
+    public string dataset_version_id { get; set; }
+}
+
+public class Presets
+{
+}
+
+public class ResponseData
+{
+    public Status status { get; set; }
+    public List<Output> outputs { get; set; }
+}
+
+public class SelectConcept
+{
+    public string id { get; set; }
+}
+
+public class Status
+{
+    public int code { get; set; }
+    public string description { get; set; }
+    public string req_id { get; set; }
+}
+
+public class TrainInfo
+{
+    public Params @params { get; set; }
+}
+
+public class Visibility
+{
+    public int gettable { get; set; }
+}
+
