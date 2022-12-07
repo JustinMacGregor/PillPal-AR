@@ -10,7 +10,7 @@ public class LoadNumPills : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pillText.text = GlobalState.instance.numPills.ToString();
+        pillText.text = PlayerPrefs.GetInt("numPillsToTake").ToString();
     }
 
     // Update is called once per frame

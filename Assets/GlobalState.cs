@@ -25,6 +25,7 @@ public class GlobalState : MonoBehaviour
     public void IncNumPills()
     {
         instance.numPills += 1;
+        PlayerPrefs.SetInt("numPillsToTake", instance.numPills);
     }
 
     public void DecNumPills()
@@ -34,6 +35,7 @@ public class GlobalState : MonoBehaviour
         {
             instance.numPills = 0;
         }
+        PlayerPrefs.SetInt("numPillsToTake", instance.numPills);
     }
 
 
