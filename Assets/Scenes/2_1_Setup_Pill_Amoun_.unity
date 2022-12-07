@@ -11981,10 +11981,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Please use the buttons on the right to input the number of pills you take
-    per day.  The increase button gives +1 and the decrease button gives -1.  Press
-    the \"Confirm\" button down below when you are finished.\n\nTODO: Store value
-    in PlayerPrefs \n(this saves it to memory and tells the system how many times
-    to iterate the 2_Setup_PillPal scene before setup is complete)"
+    per day.  The increase button gives +1 and the decrease button gives -1.  \n\nPress
+    the \"Confirm\" button down below when you are finished."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6a84f857bec7e7345843ae29404c57ce, type: 2}
   m_sharedMaterial: {fileID: 21202819797275496, guid: 6a84f857bec7e7345843ae29404c57ce,
