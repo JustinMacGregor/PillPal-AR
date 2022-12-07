@@ -16,9 +16,18 @@ public class GlobalState : MonoBehaviour
         }
     }
 
-    public void incNumPills(int numPills)
+    public void IncNumPills()
     {
-        numPills += 1;
+        instance.numPills += 1;
+    }
+
+    public void DecNumPills()
+    {
+        instance.numPills -= 1;
+        if (instance.numPills < 0)
+        {
+            instance.numPills = 0;
+        }
     }
 
 
