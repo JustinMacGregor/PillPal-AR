@@ -16,6 +16,14 @@ public class SceneSwitcher : MonoBehaviour
         SceneManager.LoadScene("3_Steps_PillPal");
     }
 
+    public void LoadSetupFromPillAmtSetup()
+    {
+        if (GlobalState.instance.numPills > 0)
+        {
+            SceneManager.LoadScene("2_Setup_PillPal");
+        }
+    }
+
     public void LoadHomePage()
     {
         SceneManager.LoadScene("1_Menu_PillPal");
