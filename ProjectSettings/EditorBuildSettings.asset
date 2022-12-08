@@ -26,6 +26,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/2_Setup_PillPal.unity
     guid: 083fd33ee8320a04b8376aa756fce38a
+  - enabled: 1
+    path: Assets/Scenes/2_1_Setup_Pill_Amoun_.unity
+    guid: 2209537e7a0faf246b6773ed5a10e366
+  - enabled: 1
+    path: Assets/Scenes/3_Steps_PillPal.unity
+    guid: eee69f5ae519ed449b85ebb3f6db1014
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: b67801e8dc27986469db8a9b7c8e8d86,
       type: 2}

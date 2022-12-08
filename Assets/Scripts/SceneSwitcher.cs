@@ -11,6 +11,16 @@ public class SceneSwitcher : MonoBehaviour
         SceneManager.LoadScene("2_Setup_PillPal");
     }
 
+    public void LoadSetupAmount()
+    {
+        SceneManager.LoadScene("2_1_Setup_Pill_Amoun_");
+    }
+
+    public void LoadTakePills()
+    {
+        SceneManager.LoadScene("3_Steps_PillPal");
+    }
+
     public void LoadDailyPills()
     {
         SceneManager.LoadScene("3_Steps_PillPal");

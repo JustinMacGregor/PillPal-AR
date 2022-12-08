@@ -4025,7 +4025,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018833938}
   m_LocalRotation: {x: 0.31800446, y: -0, z: -0, w: 0.94808924}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5301}
+  m_LocalPosition: {x: 0, y: 0, z: 0.819}
   m_LocalScale: {x: 0.0005062501, y: 0.0005062501, z: 0.0005062501}
   m_Children: []
   m_Father: {fileID: 841834490}
@@ -4033,7 +4033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 37.085003, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.0006, y: -0.32}
+  m_AnchoredPosition: {x: 0.0006, y: 0.062}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1018833945
@@ -8487,8 +8487,9 @@ MonoBehaviour:
   m_text: '<size=42><b>How to use</b></size>
 
 
-    Hold the pill up to the headset
-    about 20cm away, and say "Take picture" or click the camera icon to take a screenshot.
+    Check the screenshot at the top
+    to see which pill to take.  After you''ve taken the pill, press the "Confirm
+    Current Pill Taken" button to move to the next pill.
 
 '
   m_isRightToLeft: 0
@@ -10889,7 +10890,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PillPal Controls
+  m_text: Pill Taking Controls
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6a84f857bec7e7345843ae29404c57ce, type: 2}
   m_sharedMaterial: {fileID: 21202819797275496, guid: 6a84f857bec7e7345843ae29404c57ce,
