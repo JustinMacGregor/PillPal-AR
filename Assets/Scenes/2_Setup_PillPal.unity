@@ -9699,7 +9699,6 @@ GameObject:
   - component: {fileID: 1684155377}
   - component: {fileID: 1684155376}
   - component: {fileID: 1684155375}
-  - component: {fileID: 1684155384}
   - component: {fileID: 1684155382}
   m_Layer: 0
   m_Name: BtnNextPill
@@ -9906,23 +9905,12 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1684155384}
-        m_MethodName: OnNextPill
+      - m_Target: {fileID: 0}
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1890593055}
-        m_MethodName: LoadCurrentPillImage
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10130,17 +10118,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1684155382}
-        m_MethodName: Submit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   TouchEnd:
     m_PersistentCalls:
       m_Calls:
@@ -10237,19 +10214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724341da07c2e1742a82bcc156a2461d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1684155384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1684155373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18f74f7fb58ccff48b406f8f54498d66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonText: {fileID: 531106414}
 --- !u!1 &1687251294
 GameObject:
   m_ObjectHideFlags: 0
@@ -11217,7 +11181,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1890593056}
-  - component: {fileID: 1890593055}
   m_Layer: 0
   m_Name: GlobalSceneData
   m_TagString: Untagged
@@ -11225,22 +11188,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1890593055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1890593054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116d0d725c823ea42b0d203b877521b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pillImageCanvas: {fileID: 1018833943}
-  pillImgTextureList: []
-  numPillsToTake: 0
-  currentPillIndex: 0
 --- !u!4 &1890593056
 Transform:
   m_ObjectHideFlags: 0
@@ -12843,7 +12790,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 690982369236424830}
-  - component: {fileID: 690982369236424832}
   m_Layer: 0
   m_Name: DebugPanel
   m_TagString: Untagged
@@ -12851,19 +12797,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &690982369236424832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690982369236424831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3b854c9fa7faf3418e2f752e2826f32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pillText: {fileID: 690982369734895721}
 --- !u!222 &690982369734895720
 CanvasRenderer:
   m_ObjectHideFlags: 2
