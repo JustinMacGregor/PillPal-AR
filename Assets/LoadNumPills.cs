@@ -17,6 +17,13 @@ public class LoadNumPills : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        pillText.text = "Current pill number: " + (GlobalPillTakingLogic.instance.currentPillIndex + 1).ToString() + " Out of: " + PlayerPrefs.GetInt("numPillsToTake").ToString() + " pills.";
+        if (GlobalPillTakingLogic.instance.currentPillIndex + 1 <= PlayerPrefs.GetInt("numPillsToTake"))
+        {
+            pillText.text = "Current pill number: " + (GlobalPillTakingLogic.instance.currentPillIndex + 1).ToString() + " Out of: " + PlayerPrefs.GetInt("numPillsToTake").ToString() + " pills.";
+        }
+        else
+        {
+            pillText.text = "Done taking pills!";
+        }
     }
 }

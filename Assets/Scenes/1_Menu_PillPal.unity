@@ -9501,6 +9501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7614231226267183927}
+  - component: {fileID: 7614231226267183928}
   m_Layer: 0
   m_Name: SceneDescriptionPanelRev
   m_TagString: Untagged
@@ -9525,6 +9526,20 @@ Transform:
   m_Father: {fileID: 841834490}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7614231226267183928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614231226267183926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3dc70d2f3acd3a4dbe7842eea1185b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pillsTakenTodayInt: 0
+  pillsTakenText: {fileID: 7614231226834590496}
 --- !u!4 &7614231226348829150
 Transform:
   m_ObjectHideFlags: 0
