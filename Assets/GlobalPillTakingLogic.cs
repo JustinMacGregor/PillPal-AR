@@ -24,8 +24,13 @@ public class GlobalPillTakingLogic : MonoBehaviour
 
         for (int i = 0; i< numPillsToTake; i++)
         {
-            pillImgTextureList.Add(Resources.Load<Texture2D>("pillimg"));
+            pillImgTextureList.Add(Resources.Load<Texture2D>("pillhand2"));
         }
+        //hard coding the last image as the done image
+        pillImgTextureList.Add(Resources.Load<Texture2D>("done"));
+
+        //hard coding the first image for testing purposes to show that the images change dynamically
+        pillImgTextureList[0] = Resources.Load<Texture2D>("pillhand");
 
 
         if (instance == null)
