@@ -125,7 +125,9 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: -545257491219172432, guid: b67801e8dc27986469db8a9b7c8e8d86, type: 2}
+  - {fileID: 2636498070102864264, guid: 56951568ad9ee0844af50a3567ff85e5, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -624,7 +626,7 @@ PlayerSettings:
   metroCertificatePassword: 
   metroCertificateSubject: DefaultCompany
   metroCertificateIssuer: DefaultCompany
-  metroCertificateNotAfter: 80dd684bd665d801
+  metroCertificateNotAfter: 00780c32102bda01
   metroApplicationDescription: Template_3D
   wsaImages: {}
   metroTileShortName: 
@@ -679,7 +681,7 @@ PlayerSettings:
       UserNotificationListener: False
       VideosLibrary: False
       VoipCall: False
-      WebCam: False
+      WebCam: True
   metroTargetDeviceFamilies:
     Desktop: False
     Holographic: False
