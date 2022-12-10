@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Windows.WebCam;
@@ -16,6 +17,11 @@ public class GetImagePrediction : MonoBehaviour
     /// TAKE PICTURE FROM HOLOLENS, SEND TO 
     /// </summary>
     void Start()
+    {
+        
+    }
+
+    public void TakePicture()
     {
         PhotoCapture.CreateAsync(false, OnPhotoCaptureCreated);
     }
@@ -38,12 +44,15 @@ public class GetImagePrediction : MonoBehaviour
         captureObject.StartPhotoModeAsync(c, OnPhotoModeStarted);
     }
 
+    private float time = Time.time;
+
     private void OnPhotoModeStarted(PhotoCapture.PhotoCaptureResult result)
     {
         if (result.success)
         {
-            string filename = imageFilename;
+            string filename = string.Format(@"CapturedImage{0}_n.jpg", time);
             string filePath = System.IO.Path.Combine(Application.persistentDataPath, filename);
+            Debug.Log(filePath);
 
             photoCaptureObject.TakePhotoAsync(filePath, PhotoCaptureFileOutputFormat.JPG, OnCapturedPhotoToDisk);
         }
@@ -57,9 +66,23 @@ public class GetImagePrediction : MonoBehaviour
     {
         if (result.success)
         {
+            string filename = string.Format(@"CapturedImage{0}_n.jpg", time);
+            string filePath = System.IO.Path.Combine(Application.persistentDataPath, filename);
+
+            // Open the JPG file and read its contents
+            byte[] imageBytes = File.ReadAllBytes(filePath);
+
+            // Encode the image bytes as a base64 string
+            string base64String = Convert.ToBase64String(imageBytes);
+
+            // Save the base64 string to a variable
+            var myBase64StringVariable = base64String;
+
+            Debug.Log(myBase64StringVariable);
+            MakePrediction(myBase64StringVariable);
+
             Debug.Log("Saved Photo to disk!");
-            byte[] bytes = File.ReadAllBytes(imageFilename);
-            MakePrediction(System.Text.Encoding.UTF8.GetString(bytes));
+
             photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
         }
         else
