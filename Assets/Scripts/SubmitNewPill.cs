@@ -46,7 +46,8 @@ public class SubmitNewPill : MonoBehaviour
             if (predictionTextMesh.text != "")
             {
                 pills[index] = "Capsule Pill";
-                GlobalPillScreenshotData.instance.pillScreenshotStringData[index] = GetImagePrediction.instance.currentScreenshotImageString;
+                //GlobalPillScreenshotData.instance.pillScreenshotStringData[index] = GetImagePrediction.instance.currentScreenshotImageString;
+                PlayerPrefs.SetString("pillToTake_" + index, GetImagePrediction.instance.currentScreenshotImageString);
                 index++;
                 int tempIndex = 1;
                 string tempTextMeshString = "";

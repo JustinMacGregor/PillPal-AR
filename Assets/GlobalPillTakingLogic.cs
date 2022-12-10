@@ -39,7 +39,7 @@ public class GlobalPillTakingLogic : MonoBehaviour
 
         for (int i = 0; i < numPillsToTake; i++)
         {
-            byte[] imageBytes = Convert.FromBase64String(GlobalPillScreenshotData.instance.pillScreenshotStringData[i]);
+            byte[] imageBytes = Convert.FromBase64String(PlayerPrefs.GetString("pillToTake_" + i));
             Texture2D texture = new Texture2D(2, 2);
             texture.LoadImage(imageBytes);
             pillImgTextureList.Add(texture);
