@@ -12,13 +12,21 @@ using UnityEngine.Windows.WebCam;
 public class GetImagePrediction : MonoBehaviour
 {
     // Variable for storing a reference to the PhotoCapture instance
+    [SerializeField] private Canvas currentPillScreenshotCanvas;
+
+    public string currentScreenshotImageString;
+
+    public static GetImagePrediction instance;
 
     /// <summary>
     /// TAKE PICTURE FROM HOLOLENS, SEND TO 
     /// </summary>
     void Start()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
 
     public void TakePicture()
@@ -75,10 +83,28 @@ public class GetImagePrediction : MonoBehaviour
             // Encode the image bytes as a base64 string
             string base64String = Convert.ToBase64String(imageBytes);
 
+            GetImagePrediction.instance.currentScreenshotImageString = base64String;
+
+            //byte[] temp = Convert.FromBase64String(base64String);
+
             // Save the base64 string to a variable
             var myBase64StringVariable = base64String;
 
             Debug.Log(myBase64StringVariable);
+
+
+
+            Texture2D texture = new Texture2D(2, 2);
+            GameObject imgObject = new GameObject("currentImage");
+            texture.LoadImage(imageBytes);
+
+            Sprite loadedSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+            UnityEngine.UI.Image canvasImage = currentPillScreenshotCanvas.GetComponent<UnityEngine.UI.Image>();
+            canvasImage.sprite = loadedSprite;
+
+
+
             MakePrediction(myBase64StringVariable);
 
             Debug.Log("Saved Photo to disk!");

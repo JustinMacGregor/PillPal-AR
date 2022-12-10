@@ -23,9 +23,11 @@ public class SubmitNewPill : MonoBehaviour
         pillListText = pillList.GetComponent<TextMeshProUGUI>();
         pillListText.text = "Hello";
 
-        pills = new string[GlobalState.instance.numPills];
+        pills = new string[PlayerPrefs.GetInt("numPillsToTake")];
         Debug.Log(pills.Length);
         index = 0;
+
+
     }
 
     // Update is called once per frame
@@ -36,7 +38,7 @@ public class SubmitNewPill : MonoBehaviour
 
     public void UpdateText()
     {
-        if (index == GlobalState.instance.numPills)
+        if (index == PlayerPrefs.GetInt("numPillsToTake"))
         {
             goToHome.Invoke();
         } else
@@ -44,6 +46,7 @@ public class SubmitNewPill : MonoBehaviour
             if (predictionTextMesh.text != "")
             {
                 pills[index] = "Capsule Pill";
+                GlobalPillScreenshotData.instance.pillScreenshotStringData[index] = GetImagePrediction.instance.currentScreenshotImageString;
                 index++;
                 int tempIndex = 1;
                 string tempTextMeshString = "";

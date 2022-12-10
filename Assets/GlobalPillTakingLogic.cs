@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,9 @@ public class GlobalPillTakingLogic : MonoBehaviour
         numPillsToTake = PlayerPrefs.GetInt("numPillsToTake");
         currentPillIndex = 0;
 
+
+        //loading logic for hard coded screenshots, uncomment to use hard coded screenshots
+        /*
         for (int i = 0; i< numPillsToTake; i++)
         {
             pillImgTextureList.Add(Resources.Load<Texture2D>("pillhand2"));
@@ -31,7 +35,17 @@ public class GlobalPillTakingLogic : MonoBehaviour
 
         //hard coding the first image for testing purposes to show that the images change dynamically
         pillImgTextureList[0] = Resources.Load<Texture2D>("pillhand");
+        */
 
+        for (int i = 0; i < numPillsToTake; i++)
+        {
+            byte[] imageBytes = Convert.FromBase64String(GlobalPillScreenshotData.instance.pillScreenshotStringData[i]);
+            Texture2D texture = new Texture2D(2, 2);
+            texture.LoadImage(imageBytes);
+            pillImgTextureList.Add(texture);
+        }
+
+        pillImgTextureList.Add(Resources.Load<Texture2D>("done"));
 
         if (instance == null)
         {
