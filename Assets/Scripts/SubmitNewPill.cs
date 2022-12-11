@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SubmitNewPill : MonoBehaviour
 {
@@ -40,7 +41,8 @@ public class SubmitNewPill : MonoBehaviour
     {
         if (index == PlayerPrefs.GetInt("numPillsToTake"))
         {
-            goToHome.Invoke();
+            //goToHome.Invoke();
+            SceneManager.LoadScene("3_Steps_PillPal");
         } else
         {
             if (predictionTextMesh.text != "")
@@ -48,6 +50,7 @@ public class SubmitNewPill : MonoBehaviour
                 pills[index] = "Capsule Pill";
                 //GlobalPillScreenshotData.instance.pillScreenshotStringData[index] = GetImagePrediction.instance.currentScreenshotImageString;
                 PlayerPrefs.SetString("pillToTake_" + index, GetImagePrediction.instance.currentScreenshotImageString);
+                PlayerPrefs.Save();
                 index++;
                 int tempIndex = 1;
                 string tempTextMeshString = "";

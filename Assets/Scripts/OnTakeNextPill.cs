@@ -30,6 +30,7 @@ public class OnTakeNextPill : MonoBehaviour
             else
             {
                 PlayerPrefs.SetInt("pillsTakenTodayBool", 1);
+                PlayerPrefs.Save();
                 SceneManager.LoadScene("1_Menu_PillPal");
             }
         }
